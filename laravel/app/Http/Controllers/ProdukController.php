@@ -2,28 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
-use Illuminate\Container\Attributes\DB;
+use App\Models\produk;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-    public function index(){
-        $produks= Produk::all();
-        return view ('produk.index',compact('produks'));
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $allproduk = produk::all();
+        return view('produk.index', compact('allproduk'));
     }
-    public function create(){
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
         return view('produk.create');
     }
-     public function store(Request $request)
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        DB::table('produks')->insert([
-            'nama' => $request->nama,
-            'merk' => $request->merk,
-            'stok' => $request->stok,
-            'harga' => $request->harga
+        $validateData = $request-> validate([
+            'nama'=>'required|max:100',
+            'merk'=>'required|max:100',
+            'stok'=>'required|integer',
+            'harga'=>'required|integer',
         ]);
-        return redirect('/');
-   
+        produk::created('$validateData');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(produk $produk)
+    {
+        return view('produk.show');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(produk $produk)
+    {
+        return view('produk.edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, produk $produk)
+    {
+        
+        $validateData = $request-> validate([
+            'nama'=>'required|max:100',
+            'merk'=>'required|max:100',
+            'stok'=>'required|integer',
+            'harga'=>'required|integer',
+        ]);
+        $produk->update($validateData);
+        return redirect()->route('produk.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(produk $produk)
+    {
+        $produk->delete();
+        return redirect()->route('produk.index');
     }
 }
