@@ -29,13 +29,13 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request-> validate([
-            'nama'=>'required|max:100',
-            'merk'=>'required|max:100',
-            'stok'=>'required|integer',
-            'harga'=>'required|integer',
+        $validateData = $request->validate([
+            'nama' => 'required|max:100',
+            'merk' => 'required|max:100',
+            'stok' => 'required|integer',
+            'harga' => 'required|integer',
         ]);
-        produk::created('$validateData');
+        produk::create('$validateData');
     }
 
     /**
@@ -59,12 +59,12 @@ class ProdukController extends Controller
      */
     public function update(Request $request, produk $produk)
     {
-        
-        $validateData = $request-> validate([
-            'nama'=>'required|max:100',
-            'merk'=>'required|max:100',
-            'stok'=>'required|integer',
-            'harga'=>'required|integer',
+
+        $validateData = $request->validate([
+            'nama' => 'required|max:100',
+            'merk' => 'required|max:100',
+            'stok' => 'required|integer',
+            'harga' => 'required|integer',
         ]);
         $produk->update($validateData);
         return redirect()->route('produk.index');
