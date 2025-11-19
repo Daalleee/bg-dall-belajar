@@ -30,12 +30,12 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'nama' => 'required|max:100',
+            'nama_produk' => 'required|max:100',
             'merk' => 'required|max:100',
             'stok' => 'required|integer',
             'harga' => 'required|integer',
         ]);
-        produk::create('$validateData');
+        produk::create($validateData);
     }
 
     /**
@@ -43,7 +43,7 @@ class ProdukController extends Controller
      */
     public function show(produk $produk)
     {
-        return view('produk.show');
+        return view('produk.show', compact('produk'));
     }
 
     /**
@@ -61,7 +61,7 @@ class ProdukController extends Controller
     {
 
         $validateData = $request->validate([
-            'nama' => 'required|max:100',
+            'nama_produk' => 'required|max:100',
             'merk' => 'required|max:100',
             'stok' => 'required|integer',
             'harga' => 'required|integer',
